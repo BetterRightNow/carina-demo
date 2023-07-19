@@ -18,13 +18,16 @@ package com.zebrunner.carina.demo.gui.pages.desktop;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
+import com.zebrunner.carina.demo.gui.components.HeaderMenu;
 import com.zebrunner.carina.demo.gui.pages.common.AllBrandsPageBase;
 import com.zebrunner.carina.demo.gui.pages.common.BrandModelsPageBase;
 import com.zebrunner.carina.demo.gui.pages.common.CompareModelsPageBase;
 import com.zebrunner.carina.demo.gui.pages.common.HomePageBase;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,6 +42,9 @@ public class HomePage extends HomePageBase {
 
     @FindBy(id = "footmenu")
     private FooterMenu footerMenu;
+
+    @FindBy(id = "header")
+    private HeaderMenu headerMenu;
 
     @FindBy(xpath = "//div[contains(@class, 'brandmenu-v2')]//a")
     private List<ExtendedWebElement> brandLinks;
@@ -88,6 +94,10 @@ public class HomePage extends HomePageBase {
     public AllBrandsPageBase openAllBrandsPage(){
         allBrandsButton.click();
         return initPage(driver, AllBrandsPageBase.class);
+    }
+
+    public HeaderMenu getHeaderMenu() {
+        return headerMenu;
     }
 
 }
