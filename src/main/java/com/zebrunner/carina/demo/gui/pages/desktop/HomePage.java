@@ -68,6 +68,10 @@ public class HomePage extends HomePageBase {
         return footerMenu;
     }
 
+    public HeaderMenu getHeaderMenu() {
+        return headerMenu;
+    }
+
     @Override
     public CompareModelsPageBase openComparePage() {
         return getFooterMenu().openComparePage();
@@ -96,8 +100,8 @@ public class HomePage extends HomePageBase {
         return initPage(driver, AllBrandsPageBase.class);
     }
 
-    public HeaderMenu getHeaderMenu() {
-        return headerMenu;
+    public RegisterPage openRegisterPage() {
+        return getHeaderMenu().openRegisterPage();
     }
 
 }

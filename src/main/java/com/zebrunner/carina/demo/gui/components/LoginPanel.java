@@ -31,4 +31,19 @@ public class LoginPanel extends AbstractUIObject {
         this.printPassword();
         loginButton.click();
     }
+//    public boolean allElementsPresent() {
+//        return emailInput.isPresent() && passwordInput.isPresent() && loginButton.isPresent();
+//    }
+
+    public ExtendedWebElement getEmailInput() {
+        return emailInput;
+    }
+
+    public ExtendedWebElement getPasswordInput() {
+        return passwordInput;
+    }
+
+    public ExtendedWebElement getLoginButton() {
+        return loginButton;
+    }
 }
