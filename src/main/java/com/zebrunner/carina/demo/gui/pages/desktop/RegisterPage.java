@@ -18,7 +18,7 @@ public class RegisterPage extends CommonPage {
 
     public RegisterPage(WebDriver driver) {
         super(driver);
-        setPageURL("/register.php3");
+        setPageAbsoluteURL("https://www.gsmarena.com/register.php3");
     }
 
     public boolean registerElementsPresent() {

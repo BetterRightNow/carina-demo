@@ -4,14 +4,17 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.core.IAbstractTest;
 import com.zebrunner.carina.core.registrar.ownership.MethodOwner;
 
+import com.zebrunner.carina.demo.api.GetWeatherMethods;
+
 import com.zebrunner.carina.demo.gui.components.HeaderMenu;
 import com.zebrunner.carina.demo.gui.components.LoginPanel;
+
 import com.zebrunner.carina.demo.gui.pages.common.HomePageBase;
 import com.zebrunner.carina.demo.gui.pages.desktop.EvPage;
 import com.zebrunner.carina.demo.gui.pages.desktop.HomePage;
-
 import com.zebrunner.carina.demo.gui.pages.desktop.MerchPage;
 import com.zebrunner.carina.demo.gui.pages.desktop.RegisterPage;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -82,5 +85,14 @@ public class LoginTest implements IAbstractTest {
         evPage.consentCookies();
         Assert.assertTrue(evPage.allElementsPresent(7, evPage.getEvFooter(), evPage.getEvHeader()), "Not all elements of merch page were found");
 
+    }
+
+    @Test()
+    @MethodOwner(owner = "qpsdemo")
+    public void testGetWeather() {
+        GetWeatherMethods getWeatherMethods = new GetWeatherMethods();
+        getWeatherMethods.callAPIExpectSuccess();
+//        getWeatherMethods.validateResponse(JSONCompareMode.STRICT, JsonCompareKeywords.ARRAY_CONTAINS.getKey());
+        getWeatherMethods.validateResponseAgainstSchema("api/users/_get/weatherRs.schema");
     }
 }

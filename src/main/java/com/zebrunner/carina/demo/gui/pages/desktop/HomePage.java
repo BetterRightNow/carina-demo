@@ -103,5 +103,4 @@ public class HomePage extends HomePageBase {
     public RegisterPage openRegisterPage() {
         return getHeaderMenu().openRegisterPage();
     }
-
 }
