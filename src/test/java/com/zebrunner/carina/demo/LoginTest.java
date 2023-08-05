@@ -4,6 +4,8 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.core.IAbstractTest;
 import com.zebrunner.carina.core.registrar.ownership.MethodOwner;
 
+import com.zebrunner.carina.dataprovider.IAbstractDataProvider;
+import com.zebrunner.carina.dataprovider.annotations.XlsDataSourceParameters;
 import com.zebrunner.carina.demo.api.GetWeatherMethods;
 
 import com.zebrunner.carina.demo.gui.components.HeaderMenu;
@@ -18,7 +20,7 @@ import com.zebrunner.carina.demo.gui.pages.desktop.RegisterPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class LoginTest implements IAbstractTest {
+public class LoginTest implements IAbstractTest, IAbstractDataProvider {
     @Test()
     @MethodOwner(owner = "Pavel D")
     @TestLabel(name = "feature", value = { "web", "regression" })
@@ -88,11 +90,42 @@ public class LoginTest implements IAbstractTest {
     }
 
     @Test()
-    @MethodOwner(owner = "qpsdemo")
+    @MethodOwner(owner = "Pavel D")
     public void testGetWeather() {
         GetWeatherMethods getWeatherMethods = new GetWeatherMethods();
         getWeatherMethods.callAPIExpectSuccess();
 //        getWeatherMethods.validateResponse(JSONCompareMode.STRICT, JsonCompareKeywords.ARRAY_CONTAINS.getKey());
         getWeatherMethods.validateResponseAgainstSchema("api/users/_get/weatherRs.schema");
+    }
+
+    /**
+     * Parametrization using external xls/xlsx:
+     * <br>
+     * Every row in spreadsheet provides tests arguments set for 1 test.
+     * <p>{@link XlsDataSourceParameters} annotation should contain:</p>
+     *  <ul>
+     *      <li>path - xls/xlsx file path located in src/test/resources
+     *      <li>sheet - xls spreadsheet name
+     *      <li>dsUid - column name from spreadsheet with unique identifiers
+     *      <li>dsArgs - column names from spreadsheet that contains test value
+     * </ul>
+     *
+     * @param login String
+     * @param pass String
+     */
+    @Test(dataProvider = "DataProvider")
+    @MethodOwner(owner = "Pavel D")
+    @XlsDataSourceParameters(path = "data_source/loginDemo.xlsx", sheet = "Calculator", dsUid = "TUID", dsArgs = "login,pass")
+    public void testXlsLogin(String login, String pass) {
+        HomePage homePage = new HomePage(getDriver());
+        homePage.open();
+        Assert.assertTrue(homePage.isPageOpened(), "Home page is not opened!");
+        homePage.refresh(5);
+        HeaderMenu headerMenu = homePage.getHeaderMenu();
+        LoginPanel loginPanel = headerMenu.openLoginPanel();
+        loginPanel.getEmailInput().type(login);
+        loginPanel.getPasswordInput().type(login);
+        loginPanel.getLoginButton().click();
+        Assert.assertFalse(headerMenu.userLoggedIn(), "user logged in");
     }
 }
