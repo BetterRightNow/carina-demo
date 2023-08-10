@@ -20,7 +20,7 @@ import com.zebrunner.carina.demo.gui.pages.desktop.RegisterPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class LoginTest implements IAbstractTest, IAbstractDataProvider {
+public class HomeWorkTest implements IAbstractTest, IAbstractDataProvider {
     @Test()
     @MethodOwner(owner = "Pavel D")
     @TestLabel(name = "feature", value = { "web", "regression" })
@@ -44,6 +44,7 @@ public class LoginTest implements IAbstractTest, IAbstractDataProvider {
         homePage.open();
         Assert.assertTrue(homePage.isPageOpened(), "Home page is not opened!");
     }
+
     @Test()
     @MethodOwner(owner = "Pavel D")
     @TestLabel(name = "feature", value = { "web", "regression" })
